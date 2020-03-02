@@ -14,20 +14,8 @@ let xpos = 0;
 
 function draw() {
   background(220);
-  if (getAudioContext().state == 'running') {
-
-  //PLANE CONTROLLS
-  micLevel = mic.getLevel();
-  if(micLevel > 0.23){
-    if(h>0)
-      h -= 10 * micLevel;
-  }else{
-    if(h<height)
-      h +=3;
-  }
-  //ellipse(width/2, h, 20, 20);
-  image(img,width/2 - 20,h -20,40,40);
-  xpos +=0.2;
+if (getAudioContext().state == 'running') {
+  planeController();
   //TERRAIN GENERATION
   let xi = 0;
   for (let x=0; x < width; x++) {
@@ -45,10 +33,10 @@ function draw() {
     xpos = 0;
   }
 }else{
-textSize(32);
-text('CLICK TO PLAY', width/2-120, height/2);
-fill(0, 102, 153);
-}
+  textSize(32);
+  text('CLICK TO PLAY', width/2-120, height/2);
+  fill(0, 102, 153);
+ }
 }
 function touchStarted() {
   if (getAudioContext().state !== 'running') {
@@ -57,4 +45,18 @@ function touchStarted() {
   }
   mic = new p5.AudioIn();
   mic.start();
+}
+
+function planeController(){
+  micLevel = mic.getLevel();
+  if(micLevel > 0.23){
+    if(h>0)
+      h -= 10 * micLevel;
+  }else{
+    if(h<height)
+      h +=3;
+  }
+  //ellipse(width/2, h, 20, 20);
+  image(img,width/2 - 20,h -20,40,40);
+  xpos +=0.2;
 }
