@@ -60,8 +60,3 @@ function planeController(){
   image(img,width/2 - 20,h -20,40,40);
   xpos +=0.2;
 }
-
-
-
-//bruh
-//bruh
