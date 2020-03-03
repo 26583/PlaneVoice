@@ -9,6 +9,7 @@ function setup() {
   mic.start();
   h = height;
   img = loadImage('planefinal.png');
+  score = 0;
 }
 
 let noiseScale=0.04;
@@ -17,10 +18,9 @@ let xpos = 0;
 function draw() {
   background(220);
 if (getAudioContext().state == 'running') {
-  text(score, 25, 25);
   console.log(score);
-  timer();
   planeController();
+  timer();
   //TERRAIN GENERATION
   let xi = 0;
   for (let x=0; x < width; x++) {
@@ -29,7 +29,12 @@ if (getAudioContext().state == 'running') {
     line(x, noiseVal*300-100, x, -height);
     line(x, noiseVal*700+50, x, height);
   }
-  //rect(25, 25, 20, 20);
+
+  fill(0,0,0);
+  rect(0, 0, 75, 40);
+  fill(255,255,255);
+  text(score, 10, 30);
+
   //COLLISION---------------------------------------------------------------------------------------
   if(h > noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*700+50 ||
      h < noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*300-100){
@@ -37,7 +42,7 @@ if (getAudioContext().state == 'running') {
         h = noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100;
         if(noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100 > height){
           h = height-200;
-          score = 0;
+          score = 1;
         }
     xpos = 0;
   }
