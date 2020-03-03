@@ -24,12 +24,15 @@ if (getAudioContext().state == 'running') {
     line(x, noiseVal*300-100, x, -height);
     line(x, noiseVal*700+50, x, height);
   }
+  //COLLISION---------------------------------------------------------------------------------------
   if(h > noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*700+50 ||
      h < noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*300-100){
+       //CODE RUNS WHEN PLAYER DIES-----------------------------------------------
         h = noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100;
         if(noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100 > height){
           h = height-200;
         }
+
     xpos = 0;
   }
 }else{
