@@ -1,6 +1,8 @@
 let mic;
 let h;
 let img;
+let score;
+
 function setup() {
   createCanvas(400, 400);
   mic = new p5.AudioIn();
@@ -15,6 +17,9 @@ let xpos = 0;
 function draw() {
   background(220);
 if (getAudioContext().state == 'running') {
+  text(score, 25, 25);
+  console.log(score);
+  timer();
   planeController();
   //TERRAIN GENERATION
   let xi = 0;
@@ -24,6 +29,7 @@ if (getAudioContext().state == 'running') {
     line(x, noiseVal*300-100, x, -height);
     line(x, noiseVal*700+50, x, height);
   }
+  //rect(25, 25, 20, 20);
   //COLLISION---------------------------------------------------------------------------------------
   if(h > noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*700+50 ||
      h < noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*300-100){
@@ -31,10 +37,11 @@ if (getAudioContext().state == 'running') {
         h = noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100;
         if(noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100 > height){
           h = height-200;
+          score = 0;
         }
-
     xpos = 0;
   }
+
 }else{
   textSize(32);
   text('CLICK TO PLAY', width/2-120, height/2);
@@ -62,4 +69,8 @@ function planeController(){
   //ellipse(width/2, h, 20, 20);
   image(img,width/2 - 20,h -20,40,40);
   xpos +=0.2;
+}
+
+function timer(){
+  score += 1;
 }
