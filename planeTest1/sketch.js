@@ -21,7 +21,7 @@ let planeSpeed = 0.3;
 function draw() {
   background(220);
 if (getAudioContext().state == 'running' && playing) {
-  console.log(score);
+  //console.log(score);
   planeController();
   timer();
   //TERRAIN GENERATION
@@ -82,6 +82,9 @@ function touchStarted() {
 
 function planeController(){
   micLevel = mic.getLevel();
+  if(keyIsPressed){
+    h -= 7;
+  }
   if(micLevel > 0.23){
     if(h>0)
       h -= 10 * micLevel;
