@@ -1,6 +1,7 @@
 let mic;
 let h;
 let img;
+let coin;
 let score;
 let scoreShow;
 let playing = true;
@@ -11,6 +12,7 @@ function setup() {
   mic.start();
   h = height;
   img = loadImage('planefinal.png');
+  coin = loadImage('coins.png');
   score = 0;
 }
 
@@ -83,7 +85,7 @@ function touchStarted() {
 function planeController(){
   micLevel = mic.getLevel();
   if(keyIsPressed){
-    h -= 7;
+    h -= 7.5;
   }
   if(micLevel > 0.23){
     if(h>0)
@@ -95,6 +97,10 @@ function planeController(){
   //ellipse(width/2, h, 20, 20);
   image(img,width/2 - 20,h -20,40,40);
   xpos += planeSpeed;
+}
+
+function coins(){
+  
 }
 
 function timer(){
