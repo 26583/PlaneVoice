@@ -2,6 +2,7 @@ let mic;
 let h;
 let img;
 let score;
+let scoreShow;
 
 function setup() {
   createCanvas(400, 400);
@@ -14,6 +15,7 @@ function setup() {
 
 let noiseScale=0.04;
 let xpos = 0;
+let planeSpeed = 0.3;
 
 function draw() {
   background(220);
@@ -22,9 +24,12 @@ if (getAudioContext().state == 'running') {
   planeController();
   timer();
   //TERRAIN GENERATION
+  if(planeSpeed <3){
+  planeSpeed = planeSpeed + 0.0001;
+}
   let xi = 0;
   for (let x=0; x < width; x++) {
-    xi +=0.1;
+    xi += 0.1;
     let noiseVal = noise((xi+xpos)*noiseScale, noiseScale);
     line(x, noiseVal*300-100, x, -height);
     line(x, noiseVal*700+50, x, height);
@@ -33,7 +38,8 @@ if (getAudioContext().state == 'running') {
   fill(0,0,0);
   rect(0, 0, 75, 40);
   fill(255,255,255);
-  text(score, 10, 30);
+  textSize(32);
+  text(scoreShow, 10, 30);
 
   //COLLISION---------------------------------------------------------------------------------------
   if(h > noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*700+50 ||
@@ -42,8 +48,9 @@ if (getAudioContext().state == 'running') {
         h = noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100;
         if(noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100 > height){
           h = height-200;
-          score = 1;
         }
+    score = 1;
+    planeSpeed = 0.3;
     xpos = 0;
   }
 
@@ -73,9 +80,10 @@ function planeController(){
   }
   //ellipse(width/2, h, 20, 20);
   image(img,width/2 - 20,h -20,40,40);
-  xpos +=0.2;
+  xpos += planeSpeed;
 }
 
 function timer(){
-  score += 1;
+  score += 0.1*planeSpeed;
+  scoreShow = round(score);
 }
