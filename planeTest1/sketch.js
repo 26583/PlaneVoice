@@ -3,6 +3,7 @@ let h;
 let img;
 let score;
 let scoreShow;
+let playing = true;
 
 function setup() {
   createCanvas(400, 400);
@@ -19,7 +20,7 @@ let planeSpeed = 0.3;
 
 function draw() {
   background(220);
-if (getAudioContext().state == 'running') {
+if (getAudioContext().state == 'running' && playing) {
   console.log(score);
   planeController();
   timer();
@@ -35,11 +36,15 @@ if (getAudioContext().state == 'running') {
     line(x, noiseVal*700+50, x, height);
   }
 
-  fill(0,0,0);
-  rect(0, 0, 75, 40);
+  fill(191, 249, 255);
+  rect(0, 0, 50+score/1.3, 40);
   fill(255,255,255);
   textSize(32);
+  fill(0,0,0);
   text(scoreShow, 10, 30);
+  if(50+score/1.3 >= width){
+    playing = false;
+  }
 
   //COLLISION---------------------------------------------------------------------------------------
   if(h > noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*700+50 ||
@@ -55,9 +60,15 @@ if (getAudioContext().state == 'running') {
   }
 
 }else{
+  if(playing){
   textSize(32);
   text('CLICK TO PLAY', width/2-120, height/2);
   fill(0, 102, 153);
+}else{
+  textSize(32);
+  text('YOU WIN', width/2-120, height/2);
+  fill(0, 102, 153);
+}
  }
 }
 function touchStarted() {
