@@ -1,10 +1,11 @@
 let mic;
 let h;
 let img;
-let coin;
+let coinImg;
 let score;
 let scoreShow;
 let playing = true;
+let radius = 20;
 
 function setup() {
   createCanvas(400, 400);
@@ -12,20 +13,26 @@ function setup() {
   mic.start();
   h = height;
   img = loadImage('planefinal.png');
-  coin = loadImage('coins.png');
+  coinImg = loadImage('coins.png');
   score = 0;
 }
 
 let noiseScale=0.04;
 let xpos = 0;
 let planeSpeed = 0.3;
+/*var coin = {
+  x: 0,
+  y: 150,
+  alive: false
+}*/
 
 function draw() {
   background(220);
 if (getAudioContext().state == 'running' && playing) {
-  //console.log(score);
   planeController();
   timer();
+  coinSpawn();
+  coll();
   //TERRAIN GENERATION
   if(planeSpeed <3){
   planeSpeed = planeSpeed + 0.0001;
@@ -99,8 +106,18 @@ function planeController(){
   xpos += planeSpeed;
 }
 
-function coins(){
-  
+function coinSpawn(){
+  coin.x = width;
+  image(coinImg, coin.x-xpos * 10, coin.y, radius, radius);
+}
+
+function coll(other){
+  if(coin.x-xpos * 10 + radius> coin.x/2 - 20 && coin.x-xpos * 10 < coin.x/2 + 20){
+    console.log("midden");
+    if(coin.y - radius > h -20 && coin.y < h +20){
+      console.log("money");
+    }
+  }
 }
 
 function timer(){
