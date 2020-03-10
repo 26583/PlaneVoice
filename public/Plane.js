@@ -6,10 +6,6 @@ class Plane{
     this.mic = mic;
     this.img = img;
   }
-
-  getPlaneSpeed(){
-    return this.planeSpeed;
-  }
   update(){
       let micLevel = this.mic.getLevel();
       if(this.planeSpeed <2){
