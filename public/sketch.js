@@ -6,8 +6,11 @@ let player;
 var socket;
 let enemy;
 
+let screenWidth = window.innerWidth;
+let screenHeight = window.innerHeight;
+
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(screenWidth, screenHeight);
   score = 0;
   player = new Plane(height,"PBOI", mic, loadImage('planefinal.png'));
   enemy = new Plane(height,"PBOI", null, loadImage('planefinalblauw.png'));
