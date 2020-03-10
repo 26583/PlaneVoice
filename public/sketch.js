@@ -3,11 +3,17 @@ let score;
 let scoreShow;
 let playing = true;
 let player;
+var socket;
+let enemy;
 
 function setup() {
   createCanvas(400, 400);
   score = 0;
   player = new Plane(height,"PBOI", mic, loadImage('planefinal.png'));
+  enemy = new Plane(height,"PBOI", null, loadImage('planefinalblauw.png'));
+  socket = io.connect('http://localhost:5000');
+  socket.on('pos',drawEnemys);
+  socket.on('death',restart);
 }
 
 let noiseScale=0.04;
@@ -17,16 +23,17 @@ let xpos =0;
 function draw() {
   background(220);
   if (getAudioContext().state == 'running' && playing) {
-
-
+    //socket.emit('pos',player);
     //---------------------------UPDATE START------------------------------
     player.mic = mic;
+    enemy.draw();
     player.update();
     xpos += player.planeSpeed;
     generateTerrain();
     collision();
     scoreUpdate();
     timer();
+    //socket.emit('pos',player);
 
     //--------------------------UPDATE END----------------------------------
   }else{
@@ -51,6 +58,7 @@ function draw() {
 //-----------------------------------------FUNCTIONS------------------------------
 
 function generateTerrain(){
+  noiseSeed(99);
   let xi = 0;
   for (let x=0; x < width; x++) {
     xi += 0.1;
@@ -68,12 +76,14 @@ function touchStarted() {
   mic = new p5.AudioIn();
   mic.start();
   player.mic = mic;
+  socket.emit('start');
 }
 
 function collision(){
   if(player.y > noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*700+50 ||
      player.y < noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*300-100){
        //CODE RUNS WHEN PLAYER DIES-----------------------------------------------
+       socket.emit('death');
         player.y = noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100;
         if(noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100 > height){
           player.y = height-200;
@@ -82,6 +92,8 @@ function collision(){
     player.planeSpeed = 0.3;
     xpos = 0;
   }
+
+  socket.emit('pos',player.y);
 }
 
 function scoreUpdate(){
@@ -98,4 +110,16 @@ function scoreUpdate(){
 function timer(){
   score += 0.1*player.planeSpeed;
   scoreShow = round(score);
+}
+function drawEnemys(y){
+  enemy.y = y;
+}
+function restart(){
+  score = 1;
+  player.planeSpeed = 0.3;
+  xpos = 0;
+  player.y = noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100;
+  if(noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100 > height){
+    player.y = height-200;
+  }
 }
