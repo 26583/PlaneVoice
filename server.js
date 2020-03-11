@@ -26,8 +26,10 @@ function onConnection(socket){
   }
   function start(){
     playerStarted ++;
+    console.log(playerStarted);
     if(playerStarted == 2){
-
+      io.emit('ready');
+      playerStarted =0;
     }
   }
 }

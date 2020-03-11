@@ -2,14 +2,14 @@ class Plane{
   constructor(y,name,mic,img){
     this.y = y;
     this.name = name;
-    this.planeSpeed = 0.3;
+    this.planeSpeed = 1.3;
     this.mic = mic;
     this.img = img;
   }
   update(){
       let micLevel = this.mic.getLevel();
-      if(this.planeSpeed <2){
-      this.planeSpeed = this.planeSpeed + 0.0001;
+      if(this.planeSpeed <3){
+      this.planeSpeed = this.planeSpeed + 0.001;
     }
 
       //-----------------INPUT------------------------------------------------------
@@ -25,7 +25,7 @@ class Plane{
       }
       image(this.img,width/2 - 20,this.y -20,40,40);
     if(this.planeSpeed < 3){
-      this.planeSpeed = this.planeSpeed + 0.0001;
+      this.planeSpeed = this.planeSpeed + 0.001;
     }
   }
   collision(xpos){
