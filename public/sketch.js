@@ -7,6 +7,8 @@ let offset = 2;
 let player;
 var socket;
 let enemy;
+let enemyReady = false;
+let clicked = false;
 
 let screenWidth = window.innerWidth;
 let screenHeight = window.innerHeight;
@@ -18,6 +20,7 @@ let coinHeight = 25;
 
 function setup() {
   createCanvas(screenWidth, screenHeight);
+  frameRate(30);
   score = 0;
   player = new Plane(height,"PBOI", mic, loadImage('planefinal.png'));
   enemy = new Plane(height,"PBOI", null, loadImage('planefinalblauw.png'));
@@ -25,6 +28,7 @@ function setup() {
   socket = io.connect();
   socket.on('pos',drawEnemys);
   socket.on('death',restart);
+  socket.on('ready',ready);
 }
 
 let noiseScale=0.04;
@@ -33,7 +37,7 @@ let xpos =0;
 
 function draw() {
   background(220);
-  if (getAudioContext().state == 'running' && playing) {
+  if (getAudioContext().state == 'running' && playing && enemyReady) {
     //socket.emit('pos',player);
 
     //---------------------------UPDATE START-------------------------------
@@ -88,7 +92,10 @@ function touchStarted() {
   mic = new p5.AudioIn();
   mic.start();
   player.mic = mic;
-  socket.emit('start');
+  if(!clicked){
+    socket.emit('start');
+    clicked = true;
+  }
 }
 
 function collision(){
@@ -143,4 +150,7 @@ function restart(){
   if(noise(((0.1*width/2))*noiseScale, noiseScale)*1200+50 -100 > height){
     player.y = height-200;
   }
+}
+function ready(){
+  enemyReady = true;
 }
