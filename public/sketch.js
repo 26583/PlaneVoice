@@ -27,7 +27,9 @@ function draw() {
   background(220);
   if (getAudioContext().state == 'running' && playing) {
     //socket.emit('pos',player);
+
     //---------------------------UPDATE START------------------------------
+    
     player.mic = mic;
     enemy.draw();
     player.update();
@@ -39,6 +41,7 @@ function draw() {
     //socket.emit('pos',player);
 
     //--------------------------UPDATE END----------------------------------
+
   }else{
     if(playing){
       background(220);
@@ -54,10 +57,6 @@ function draw() {
   }
 }
 
-
-
-
-
 //-----------------------------------------FUNCTIONS------------------------------
 
 function generateTerrain(){
@@ -66,8 +65,8 @@ function generateTerrain(){
   for (let x=0; x < width; x++) {
     xi += 0.1;
     let noiseVal = noise((xi+xpos)*noiseScale, noiseScale);
-    line(x, noiseVal*300-100, x, -height);
-    line(x, noiseVal*700+50, x, height);
+    line(x, noiseVal*500-100, x, -height);
+    line(x, noiseVal*1200+50, x, height);
   }
 }
 
@@ -83,12 +82,12 @@ function touchStarted() {
 }
 
 function collision(){
-  if(player.y > noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*700+50 ||
-     player.y < noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*300-100){
+  if(player.y > noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*1200+50 ||
+     player.y < noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*500-100){
        //CODE RUNS WHEN PLAYER DIES-----------------------------------------------
        socket.emit('death');
-        player.y = noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100;
-        if(noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100 > height){
+        player.y = noise(((0.1*width/2))*noiseScale, noiseScale)*1200+50 -100;
+        if(noise(((0.1*width/2))*noiseScale, noiseScale)*1200+50 -100 > height){
           player.y = height-200;
         }
     score = 1;
