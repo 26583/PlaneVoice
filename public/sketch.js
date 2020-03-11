@@ -16,7 +16,7 @@ function setup() {
   player = new Plane(height,"PBOI", mic, loadImage('planefinal.png'));
   enemy = new Plane(height,"PBOI", null, loadImage('planefinalblauw.png'));
   coin = new Coin(width, height, loadImage('coinIMG.png'), 75, 25);
-  socket = io.connect('http://localhost:5000');
+  socket = io.connect('https://planeboi.herokuapp.com/');
   socket.on('pos',drawEnemys);
   socket.on('death',restart);
 }
