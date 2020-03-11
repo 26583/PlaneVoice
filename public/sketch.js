@@ -3,12 +3,18 @@ let score;
 let coin;
 let scoreShow;
 let playing = true;
+let offset = 2;
 let player;
 var socket;
 let enemy;
 
 let screenWidth = window.innerWidth;
 let screenHeight = window.innerHeight;
+
+let coinx = screenWidth;
+let coiny = screenHeight/2;
+let coinWidth = 75;
+let coinHeight = 25;
 
 function setup() {
   createCanvas(screenWidth, screenHeight);
@@ -30,13 +36,13 @@ function draw() {
   if (getAudioContext().state == 'running' && playing) {
     //socket.emit('pos',player);
 
-    //---------------------------UPDATE START------------------------------
+    //---------------------------UPDATE START-------------------------------
 
     player.mic = mic;
     enemy.draw();
     player.update();
     coin.draw();
-    coin.update();
+    //coin.update();
     xpos += player.planeSpeed;
     generateTerrain();
     collision();
@@ -61,7 +67,7 @@ function draw() {
   }
 }
 
-//-----------------------------------------FUNCTIONS------------------------------
+//-----------------------------------------FUNCTIONS------------------------
 
 function generateTerrain(){
   noiseSeed(99);
@@ -88,7 +94,7 @@ function touchStarted() {
 function collision(){
   if(player.y > noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*1200+50 ||
      player.y < noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*500-100){
-       //CODE RUNS WHEN PLAYER DIES-----------------------------------------------
+       //-----------------CODE RUNS WHEN PLAYER DIES-----------------------------
        socket.emit('death');
         player.y = noise(((0.1*width/2))*noiseScale, noiseScale)*1200+50 -100;
         if(noise(((0.1*width/2))*noiseScale, noiseScale)*1200+50 -100 > height){
@@ -98,6 +104,12 @@ function collision(){
     player.planeSpeed = 0.3;
     xpos = 0;
   }
+  if(coinx-xpos * 10 + coinWidth> coinx/2 - 20 && coinx-xpos * 10 < coinx/2 + 20){
+    console.log("midden");
+    if(coiny > player.y - offset && coiny < player.y + offset){
+      console.log("money");
+    }
+ }
 
   socket.emit('pos',player.y);
 }
@@ -109,7 +121,7 @@ function scoreUpdate(){
   textSize(32);
   fill(0,0,0);
   text(scoreShow, 10, 30);
-  if(50+score/1.3 >= width){
+  if(50+score/0.5 >= width){
     playing = false;
   }
 }
