@@ -1,5 +1,6 @@
 let mic;
 let score;
+let coin;
 let scoreShow;
 let playing = true;
 let player;
@@ -14,6 +15,7 @@ function setup() {
   score = 0;
   player = new Plane(height,"PBOI", mic, loadImage('planefinal.png'));
   enemy = new Plane(height,"PBOI", null, loadImage('planefinalblauw.png'));
+  coin = new Coin(width, height, loadImage('coinIMG.png'), 75, 25);
   socket = io.connect();
   socket.on('pos',drawEnemys);
   socket.on('death',restart);
@@ -33,6 +35,8 @@ function draw() {
     player.mic = mic;
     enemy.draw();
     player.update();
+    coin.draw();
+    coin.update();
     xpos += player.planeSpeed;
     generateTerrain();
     collision();
@@ -90,7 +94,7 @@ function collision(){
         if(noise(((0.1*width/2))*noiseScale, noiseScale)*1200+50 -100 > height){
           player.y = height-200;
         }
-    score = 1;
+    score = 0;
     player.planeSpeed = 0.3;
     xpos = 0;
   }
@@ -100,7 +104,7 @@ function collision(){
 
 function scoreUpdate(){
   fill(191, 249, 255);
-  rect(0, 0, 50+score/1.3, 40);
+  rect(0, 0, 50+score/0.5, 40);
   fill(255,255,255);
   textSize(32);
   fill(0,0,0);
@@ -109,19 +113,22 @@ function scoreUpdate(){
     playing = false;
   }
 }
+
 function timer(){
   score += 0.1*player.planeSpeed;
   scoreShow = round(score);
 }
+
 function drawEnemys(y){
   enemy.y = y;
 }
+
 function restart(){
   score = 1;
   player.planeSpeed = 0.3;
   xpos = 0;
-  player.y = noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100;
-  if(noise(((0.1*width/2))*noiseScale, noiseScale)*700+50 -100 > height){
+  player.y = noise(((0.1*width/2))*noiseScale, noiseScale)*1200+50 -100;
+  if(noise(((0.1*width/2))*noiseScale, noiseScale)*1200+50 -100 > height){
     player.y = height-200;
   }
 }
