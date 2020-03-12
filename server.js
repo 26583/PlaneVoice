@@ -7,12 +7,13 @@ var socket = require('socket.io');
 var io = socket(server);
 
 var playerStarted = 0;
+var rand = Math.floor(Math.random() * 100);;
 
 io.sockets.on('connection', onConnection);
 
 function onConnection(socket){
   console.log("Player connected!");
-
+  io.emit('seed',rand);
   socket.on('pos', enemyPos);
   socket.on('death', restart);
   socket.on('start', start);
