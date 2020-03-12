@@ -4,6 +4,7 @@ let scoreEnemy = -1;
 let coin;
 let scoreShow;
 let playing = true;
+let offset = 2;
 let player;
 var socket;
 let enemy;
@@ -12,6 +13,11 @@ let clicked = false;
 
 let screenWidth = 1500;
 let screenHeight = 1000;
+
+let coinx = screenWidth;
+let coiny = screenHeight/2;
+let coinWidth = 75;
+let coinHeight = 25;
 
 function setup() {
   createCanvas(screenWidth, screenHeight);
@@ -37,15 +43,15 @@ function draw() {
   background(220);
   if (getAudioContext().state == 'running' && playing && enemyReady) {
     //socket.emit('pos',player);
-  //  console.log(getFrameRate());
-    //---------------------------UPDATE START------------------------------
+
+    //---------------------------UPDATE START-------------------------------
 
     player.mic = mic;
     image(enemy.img,width/2- (xpos-enemy.x)-20,enemy.y -20,40,40);
     player.update();
     coin.draw();
-    coin.update();
-    xpos += (player.planeSpeed +player.speedMulti)*(deltaTime / 50);
+    //coin.update();
+    xpos += player.planeSpeed;
     generateTerrain();
     collision();
     scoreUpdate();
@@ -70,7 +76,7 @@ function draw() {
   }
 }
 
-//-----------------------------------------FUNCTIONS------------------------------
+//-----------------------------------------FUNCTIONS------------------------
 
 function generateTerrain(){
   let xi = 0;
@@ -99,7 +105,7 @@ function touchStarted() {
 function collision(){
   if(player.y > noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*1200+100 ||
      player.y < noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*500-100){
-       //CODE RUNS WHEN PLAYER DIES-----------------------------------------------
+       //-----------------CODE RUNS WHEN PLAYER DIES-----------------------------
        socket.emit('death');
         player.y = noise(((0.1*width/2))*noiseScale, noiseScale)*1200+100 -100;
         if(noise(((0.1*width/2))*noiseScale, noiseScale)*1200+100 -100 > height){
@@ -110,11 +116,17 @@ function collision(){
     xpos = 0;
     scoreEnemy++;
   }
-  var pos = {
-    x:xpos,
-    y:player.y
-  };
-  socket.emit('pos',pos);
+  if(coinx-xpos * 10 + coinWidth> coinx/2 - 20 && coinx-xpos * 10 < coinx/2 + 20){
+    console.log("midden");
+    if(coiny > player.y - offset && coiny < player.y + offset){
+      console.log("money");
+    }
+ }
+ var pos = {
+   x:xpos,
+   y:player.y
+ };
+ socket.emit('pos',pos);
 }
 
 function scoreUpdate(){
