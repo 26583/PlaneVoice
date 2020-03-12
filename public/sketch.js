@@ -21,9 +21,9 @@ let coinHeight = 25;
 
 function setup() {
   createCanvas(screenWidth, screenHeight);
-  frameRate(60);
+  //frameRate(60);
   score = 0;
-  player = new Plane(height,width/2,"PBOI", mic, loadImage('planefinal.png'));
+  player = new Plane(noise(((0.1*width/2))*0.02, 0.02)*1000+20 -50,width/2,"PBOI", mic, loadImage('planefinal.png'));
   enemy = new Plane(height,0,"PBOI", null, loadImage('planefinalblauw.png'));
   coin = new Coin(width, height, loadImage('coinIMG.png'), 75, 25);
   socket = io.connect();
@@ -35,7 +35,7 @@ function setup() {
   })
 }
 
-let noiseScale=0.04;
+let noiseScale=0.02;
 let viewportOffset = 0;
 let xpos =0;
 
@@ -46,17 +46,19 @@ function draw() {
 
     //---------------------------UPDATE START-------------------------------
 
+    image(enemy.img,((width/2)-(xpos-enemy.x))-20,enemy.y -20,40,40);
+
     player.mic = mic;
-    image(enemy.img,width/2- (xpos-enemy.x)-20,enemy.y -20,40,40);
     player.update();
     coin.draw();
     //coin.update();
-    xpos += player.planeSpeed;
+
     generateTerrain();
     collision();
-    scoreUpdate();
     //socket.emit('pos',player);
+    scoreUpdate();
 
+    xpos += (player.planeSpeed+player.speedMulti)*(deltaTime/50);
     //--------------------------UPDATE END----------------------------------
 
   }else{
@@ -84,7 +86,7 @@ function generateTerrain(){
     xi += 0.1;
     let noiseVal = noise((xi+xpos)*noiseScale, noiseScale);
     line(x, noiseVal*500-100, x, -height);
-    line(x, noiseVal*1200+100, x, height);
+    line(x, noiseVal*1100+200, x, height);
   }
 }
 
@@ -103,13 +105,13 @@ function touchStarted() {
 }
 
 function collision(){
-  if(player.y > noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*1200+100 ||
+  if(player.y > noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*1100+200 ||
      player.y < noise(((0.1*width/2)+xpos)*noiseScale, noiseScale)*500-100){
        //-----------------CODE RUNS WHEN PLAYER DIES-----------------------------
        socket.emit('death');
-        player.y = noise(((0.1*width/2))*noiseScale, noiseScale)*1200+100 -100;
-        if(noise(((0.1*width/2))*noiseScale, noiseScale)*1200+100 -100 > height){
-          player.y = height-200;
+        player.y = noise(((0.1*width/2))*noiseScale, noiseScale)*1100+200 -50;
+        if(noise(((0.1*width/2))*noiseScale, noiseScale)*1100+200 -100 > height){
+          player.y = height-50;
         }
     score = 0;
     player.planeSpeed = 0.3;
@@ -130,19 +132,12 @@ function collision(){
 }
 
 function scoreUpdate(){
-  fill(255, 0, 0);
-  rect(0, 0, 50+score/0.5, 40);
-  fill(255,255,255);
-  textSize(32);
-  fill(0,0,0);
-  text(scorePlayer, 10, 30);
-  fill(0, 128, 255);
-  rect(width-100, 0, 100, 40);
-  fill(255,255,255);
-  textSize(32);
-  fill(0,0,0);
-  text(scoreEnemy, width-100+10, 30);
-  text(getFrameRate(), width/2, 30);
+  if(Math.round(xpos)<Math.round(enemy.x)){
+    fill(0, 0, 255);
+  }else{
+    fill(255, 0, 0);
+  }
+  rect(0, 0, width, 40);
 }
 
 function drawEnemys(pos){
