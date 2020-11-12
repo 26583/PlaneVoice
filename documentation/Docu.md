@@ -27,5 +27,7 @@
         <p>Je kan gewoon met een simpele socket.emit de info doorsturen.<br>
         En je kan op de zelfde manier luisteren als bij de server.
 </p>
+<h2>Eindresultaat:</h2>
+<img src="https://raw.githubusercontent.com/26583/PlaneVoice/master/documentation/MultiplayerShowcase.gif">
     </div>
    </div>
