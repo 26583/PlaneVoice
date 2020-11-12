@@ -10,5 +10,8 @@
         <h3><a target="_blank" href="https://github.com/26583/PlaneVoice/blob/master/server.js">Server.js</a>:</h3>
     </p>
         <img src="https://raw.githubusercontent.com/26583/PlaneVoice/master/documentation/ServerStart.PNG">
+    <p>Je hoeft niet echt te weten wat dit doet, het maakt gewoon een socket aan en verbind daarmee.<br>
+        Nu moeten wij informatie kunnen doorsturen:
+    </p>
     </div>
    </div>
