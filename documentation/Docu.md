@@ -20,5 +20,8 @@
     <img src="https://raw.githubusercontent.com/26583/PlaneVoice/master/documentation/PosFuntie.PNG">
     <p>Een simpele functie die de positie van de ene player naar de andere doorstuurd.<br>
         Zo worden eigenlijk alle andere multiplayer functies gedaan zoals dood gaan, winnen, snelheid etc.</p>
+    <p>Om informatie doortesturen en ontvangen aan de cient side moet je dit doen.<br>
+        <h3><a target="_blank" href="https://github.com/26583/PlaneVoice/blob/master/public/sketch.js">Server.js</a>:</h3>
+        
     </div>
    </div>
