@@ -14,5 +14,9 @@
         Nu moeten wij informatie kunnen doorsturen:
     </p>
     <img src="https://raw.githubusercontent.com/26583/PlaneVoice/master/documentation/SocketOn.PNG">
+    <p>In de code hierboven emitten we eerst de world seed naar de clients op de server zodat zij dezelfde wereld hebben. 
+        Daarna gebruiken wij socket.on() met deze functie kan je luisteren naar de clients die bijv hun positie doorgeven, die informatie sturen wij door naar de functies daarvoor.<br>
+        Laten we kijken naar de functie voor positie:</p>
+    <img src="https://raw.githubusercontent.com/26583/PlaneVoice/master/documentation/PosFunctie.PNG">
     </div>
    </div>
