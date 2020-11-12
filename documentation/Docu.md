@@ -13,5 +13,6 @@
     <p>Je hoeft niet echt te weten wat dit doet, het maakt gewoon een socket aan en verbind daarmee.<br>
         Nu moeten wij informatie kunnen doorsturen:
     </p>
+    <img src="https://raw.githubusercontent.com/26583/PlaneVoice/master/documentation/SocketOn.PNG">
     </div>
    </div>
