@@ -24,5 +24,8 @@
         <h3><a target="_blank" href="https://github.com/26583/PlaneVoice/blob/master/public/sketch.js">Sketch.js</a>:</h3>
         </p>
         <img src="https://raw.githubusercontent.com/26583/PlaneVoice/master/documentation/emitPos.PNG">
+        <p>Je kan gewoon met een simpele socket.emit de info doorsturen.<br>
+        En je kan op de zelfde manier luisteren als bij de server.
+</p>
     </div>
    </div>
