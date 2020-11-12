@@ -18,5 +18,7 @@
         Daarna gebruiken wij socket.on() met deze functie kan je luisteren naar de clients die bijv hun positie doorgeven, die informatie sturen wij door naar de functies daarvoor.<br>
         Laten we kijken naar de functie voor positie:</p>
     <img src="https://raw.githubusercontent.com/26583/PlaneVoice/master/documentation/PosFuntie.PNG">
+    <p>Een simpele functie die de positie van de ene player naar de andere doorstuurd.<br>
+        Zo worden eigenlijk alle andere multiplayer functies gedaan zoals dood gaan, winnen, snelheid etc.</p>
     </div>
    </div>
