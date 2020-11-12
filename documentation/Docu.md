@@ -7,6 +7,6 @@
     <h2>De Multiplayer</h2>
     <p>Voor de multiplayer hebben wij node.js gebruikt.<br>
         Eerst maakte ik verbinding met de server.<br>
-        <a href="https://github.com/26583/PlaneVoice/blob/master/public/sketch.js">Server.js</a>:
+        <a target="_blank" href="https://github.com/26583/PlaneVoice/blob/master/public/sketch.js">Server.js</a>:
     </div>
    </div>
