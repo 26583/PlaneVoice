@@ -22,6 +22,7 @@
         Zo worden eigenlijk alle andere multiplayer functies gedaan zoals dood gaan, winnen, snelheid etc.</p>
     <p>Om informatie doortesturen en ontvangen aan de cient side moet je dit doen.<br>
         <h3><a target="_blank" href="https://github.com/26583/PlaneVoice/blob/master/public/sketch.js">Sketch.js</a>:</h3>
-        
+        </p>
+        <img src="https://raw.githubusercontent.com/26583/PlaneVoice/master/documentation/emitPos.PNG">
     </div>
    </div>
